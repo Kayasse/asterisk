@@ -681,9 +681,10 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
-KBUILD_CFLAGS   += -O2
+KBUILD_CFLAGS   += -O3
 endif
 
+ifdef CONFIG_POLLY_CLANG KBUILD_CFLAGS += -mllvm -polly \ -mllvm -polly-ast-use-context \ -mllvm -polly-invariant-load-hoisting \ -mllvm -polly-opt-fusion=max \ -mllvm -polly-run-inliner \ -mllvm -polly-vectorizer=stripmine ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION KBUILD_CFLAGS += -mllvm -polly-run-dce endif endif
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
 KBUILD_CFLAGS	+= $(call cc-option,-fno-allow-store-data-races)
